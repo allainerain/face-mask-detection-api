@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 import numpy as np
 import cv2
 from flask_cors import CORS, cross_origin
@@ -16,7 +16,7 @@ mask_label = {0: 'MASK', 1: 'UNCOVERED CHIN', 2: 'UNCOVERED NOSE', 3: 'UNCOVERED
 
 @app.route('/')
 def home():
-    return "Mask Patrol API"
+    return render_template('index.html')
 
 @app.route('/hello', methods=['GET'])
 def hello():
