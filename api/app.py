@@ -16,7 +16,7 @@ app = Flask(__name__)
 CORS(app)
 
 # loading the model
-MODEL_PATH = 'mask_detection.h5'
+MODEL_PATH = '../mask_detection.h5'
 model = load_model(MODEL_PATH)     
 
 #defining the classes
@@ -24,7 +24,7 @@ mask_label = {0: 'MASK', 1: 'UNCOVERED CHIN', 2: 'UNCOVERED NOSE', 3: 'UNCOVERED
          
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return "Mask Patrol API"
 
 @app.route('/hello',methods = ['GET'])
 def hello():
