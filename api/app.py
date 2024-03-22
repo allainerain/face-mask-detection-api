@@ -7,11 +7,11 @@ import tensorflow as tf
 app = Flask(__name__)
 CORS(app)
 
-# Load the TensorFlow Lite model
+# loead the tflite model
 interpreter = tf.lite.Interpreter(model_path="../models/mask_detection_lite.tflite")
 interpreter.allocate_tensors()
 
-# Define the classes
+# define the classes
 mask_label = {0: 'MASK', 1: 'UNCOVERED CHIN', 2: 'UNCOVERED NOSE', 3: 'UNCOVERED NOSE AND MOUTH', 4: "NO MASK"}
 
 @app.route('/')
@@ -32,22 +32,29 @@ def predict():
         return result
     return None
 
+#process the files upload
 def process_image(file):
-    filestr = file.read()  # Read uploaded file from request
-    file_bytes = np.frombuffer(filestr, np.uint8)  # Convert to numpy array
-    face = cv2.imdecode(file_bytes, cv2.IMREAD_UNCHANGED)  # Decode image
+    filestr = file.read()  # read the uploaded file given to the function
+    file_bytes = np.frombuffer(filestr, np.uint8)  
+
+    #processing the image
+    face = cv2.imdecode(file_bytes, cv2.IMREAD_UNCHANGED)  
     face = cv2.cvtColor(face, cv2.COLOR_BGR2RGB)
     face = cv2.resize(face, (224, 224))
     face = np.expand_dims(face, axis=0)
-    face = (face.astype(np.float32) - 127.5) / 127.5  # Normalize the image
+    face = (face.astype(np.float32) - 127.5) / 127.5  # normalizing
+
+    #infer the results
     return perform_inference(face)
 
+#use the model to infer
 def perform_inference(face):
-    # Perform inference
+    # interpret using the tflite interpreter
     interpreter.set_tensor(interpreter.get_input_details()[0]['index'], face)
     interpreter.invoke()
     output = interpreter.get_tensor(interpreter.get_output_details()[0]['index'])
-    # Interpret the prediction
+
+    # process the output
     output_class = np.argmax(output)
     predicted_class = mask_label[output_class]
     confidence = float(np.max(output))
