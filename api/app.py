@@ -8,7 +8,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Load the TensorFlow Lite model
-interpreter = tf.lite.Interpreter(model_path="../mask_detection_lite.tflite")
+interpreter = tf.lite.Interpreter(model_path="../models/mask_detection_lite.tflite")
 interpreter.allocate_tensors()
 
 # Define the classes
