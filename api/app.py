@@ -3,6 +3,7 @@ import numpy as np
 import cv2
 from flask_cors import CORS, cross_origin
 import tensorflow as tf
+from flask import jsonify
 
 app = Flask(__name__)
 CORS(app)
@@ -27,9 +28,13 @@ def hello():
 @cross_origin(allow_headers=['Content-Type'])
 def predict():
     if request.method == 'POST':
-        file = request.files['file']
-        result = process_image(file)
-        return result
+        files = request.files.getlist('file') #obtain the files in the request
+        results = [] 
+        for file in files:
+            print(1)
+            result = process_image(file)
+            results.append(result)
+        return jsonify(results)
     return None
 
 #process the files upload
