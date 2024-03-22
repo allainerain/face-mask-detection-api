@@ -6,7 +6,7 @@ This project is an extension of the project [Mask Patrol](https://github.com/ces
 While I was trying to look for ways to deploy our project online, I came across the option of creating an API endpoint and calling it in the web app. But even then, TensorFlow was still needed, so getting it deployed for free still wasn't feasible (my bad). (You can see my failures in the deployments tab 😭😭)
 
 Although this project may not fully resolve the deployment issues, feel free to use this! If you happen to know an easier way for me to deploy our object detection project, let me know. 😀
-u
+
 ## How to run this repo ▶️
 
 1. Git clone the repository
